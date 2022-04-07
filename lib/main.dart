@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:rpay_proto/NavBar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: topMargin * 2),
+          margin: EdgeInsets.only(top: topMargin * 1.7),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -107,13 +108,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     return buildPage('data', index);
                   },
                   options: CarouselOptions(
-                      height: 200,
+                      height: 150,
                       onPageChanged: ((index, reason) => {
                             setState(() => {activeIndex = index})
                           }))),
               GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
+                        isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(35)),
@@ -125,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                   margin: const EdgeInsets.only(top: 10, bottom: 20),
                   child: buildIndicator()),
-              buildTransaction(),
+              buildPayments(),
             ],
           ),
         )
@@ -243,6 +245,300 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Widget buildPayments() {
+    if (activeIndex == 0) {
+      return Container(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Payment History",
+                        // ignore: prefer_const_constructors
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "July 2",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 260,
+                            child: DottedLine(
+                              dashColor: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            "  \$22.30",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Best Buy",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 220,
+                          ),
+                          Text(
+                            "  \$15.30",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Starbucks Mobile Order",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 113,
+                          ),
+                          Text(
+                            "  \$7.00",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "July 1",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 260,
+                            child: DottedLine(
+                              dashColor: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            "  \$71.05",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "iTunes",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 250,
+                          ),
+                          Text(
+                            "  \$9.80",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Macys.com",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 201,
+                          ),
+                          Text(
+                            "  \$50.25",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              //           crossAxisAlignment: CrossAxisAlignment.start,
+              //           mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    const Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Payment History",
+                        // ignore: prefer_const_constructors
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "July 2",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 260,
+                            child: DottedLine(
+                              dashColor: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            "  \$22.30",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Best Buy",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 220,
+                          ),
+                          Text(
+                            "  \$15.30",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Starbucks Mobile Order",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 113,
+                          ),
+                          Text(
+                            "  \$7.00",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "July 1",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 260,
+                            child: DottedLine(
+                              dashColor: Colors.white,
+                            ),
+                          ),
+                          Text(
+                            "  \$71.05",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "iTunes",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 250,
+                          ),
+                          Text(
+                            "  \$9.80",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: const <Widget>[
+                          Text(
+                            "Macys.com",
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          SizedBox(
+                            width: 201,
+                          ),
+                          Text(
+                            "  \$50.25",
+                            style: TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
   Widget buildTransaction() {
     if (activeIndex == 0) {
       return Container(
@@ -276,6 +572,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget buildPage(String a, int index) => GestureDetector(
         onTap: () {
           showModalBottomSheet(
+              isScrollControlled: true,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
               ),
@@ -292,15 +589,18 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.all(10.0),
             child: Column(children: [
               Expanded(
-                child: Row(children: const [
-                  Expanded(
-                    child: Text(
-                      "Rakuten",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.white),
+                child: Row(children: [
+                  Container(
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    child: Center(
+                      child: Image.asset(
+                        "assets/images/whitebgRakuten-removebg-preview.ico",
+                        height: 40,
+                        width: 70,
+                      ),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Text(
                       "Prepaid",
                       textAlign: TextAlign.right,
