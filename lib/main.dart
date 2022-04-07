@@ -1,3 +1,4 @@
+// ignore_for_file: file_names, avoid_unnecessary_containers
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:rpay_proto/NavBar.dart';
@@ -106,11 +107,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     return buildPage('data', index);
                   },
                   options: CarouselOptions(
+                      height: 200,
                       onPageChanged: ((index, reason) => {
                             setState(() => {activeIndex = index})
                           }))),
-              buildBalance(),
-              buildIndicator(),
+              GestureDetector(
+                  onTap: () {
+                    showModalBottomSheet(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(35)),
+                        ),
+                        context: context,
+                        builder: (context) => topUp());
+                  },
+                  child: buildBalance()),
+              Container(
+                  margin: const EdgeInsets.only(top: 10, bottom: 20),
+                  child: buildIndicator()),
               buildTransaction(),
             ],
           ),
@@ -122,20 +136,110 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget buildBalance() {
     if (activeIndex == 0) {
       return Container(
-        child: const Center(
-            child: Text(
-          "balance 1",
-          style: TextStyle(color: Colors.white),
-        )),
-      );
+          margin: const EdgeInsets.only(top: 20),
+          child: Column(
+            children: [
+              const Text(
+                "Prepaid Balance",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              const Text(
+                "\$ 1,203.35",
+                style: TextStyle(color: Colors.white, fontSize: 28),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                    top: 3, bottom: 3, left: 18, right: 18),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "TOP UP",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              )
+            ],
+          ));
     } else {
       return Container(
-        child: const Center(
-            child: Text(
-          "Balance 2",
-          style: TextStyle(color: Colors.white),
-        )),
-      );
+          margin: const EdgeInsets.only(top: 20),
+          child: Column(
+            children: [
+              Row(
+                children: const [
+                  Expanded(
+                    child: Text(
+                      "Shopping Power",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      " \$1000.00",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 2,
+              ),
+              Row(
+                children: const [
+                  Expanded(
+                    child: Text(
+                      "Pay monthly",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      " \$60.00",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                padding: const EdgeInsets.only(
+                    top: 3, bottom: 3, left: 18, right: 18),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "DETAIL",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              )
+            ],
+          ));
     }
   }
 
@@ -163,55 +267,71 @@ class _MyHomePageState extends State<MyHomePage> {
         activeIndex: activeIndex,
         count: 2,
         effect: const JumpingDotEffect(
-            activeDotColor: Colors.white, dotColor: Colors.grey),
+            dotHeight: 8.0,
+            dotWidth: 8.0,
+            activeDotColor: Colors.white,
+            dotColor: Colors.grey),
       );
 
-  Widget buildPage(String a, int index) => Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24),
-        color: Colors.grey.withOpacity(0.5),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(children: [
-            Expanded(
-              child: Row(children: const [
-                Expanded(
-                  child: Text(
-                    "Rakuten",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                Expanded(
-                  child: Text(
-                    "Prepaid",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
-              ]),
-            ),
-            Expanded(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
-                      "TAP TO REVEL",
+  Widget buildPage(String a, int index) => GestureDetector(
+        onTap: () {
+          showModalBottomSheet(
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(35)),
+              ),
+              context: context,
+              builder: (context) => buildSheet());
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.grey.withOpacity(0.5),
+          ),
+          margin: const EdgeInsets.symmetric(horizontal: 24),
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(children: [
+              Expanded(
+                child: Row(children: const [
+                  Expanded(
+                    child: Text(
+                      "Rakuten",
+                      textAlign: TextAlign.left,
                       style: TextStyle(color: Colors.white),
                     ),
-                  ]),
-            ),
-            Expanded(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Text(
-                      "circle",
+                  ),
+                  Expanded(
+                    child: Text(
+                      "Prepaid",
                       textAlign: TextAlign.right,
                       style: TextStyle(color: Colors.white),
                     ),
-                  ]),
-            ),
-          ]),
+                  )
+                ]),
+              ),
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "TAP TO REVEL",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ]),
+              ),
+              Expanded(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: const [
+                      Text(
+                        "circle",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ]),
+              ),
+            ]),
+          ),
         ),
       );
 }
@@ -464,10 +584,11 @@ Widget buildSheet() => Padding(
           height: 30,
         ),
         Container(
+          margin: const EdgeInsets.only(bottom: 10),
           child: const Text(
-            "Your card detail",
+            "Renew number",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(color: Colors.blue, fontSize: 18),
           ),
         ),
       ]),
