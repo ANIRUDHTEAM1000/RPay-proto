@@ -280,12 +280,6 @@ class _MyHomePageState extends State<MyHomePage> {
                             "July 2",
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
-                          SizedBox(
-                            width: 260,
-                            child: DottedLine(
-                              dashColor: Colors.white,
-                            ),
-                          ),
                           Text(
                             "  \$22.30",
                             style: TextStyle(fontSize: 18, color: Colors.white),
@@ -337,12 +331,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           Text(
                             "July 1",
                             style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 260,
-                            child: DottedLine(
-                              dashColor: Colors.white,
-                            ),
                           ),
                           Text(
                             "  \$71.05",
@@ -413,22 +401,25 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "July 2",
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(right: 5),
+                    child: const Text(
+                      "July 1",
+                      textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
-                  SizedBox(
-                    width: 260,
-                    child: DottedLine(
-                      dashColor: Colors.white,
+                  const Expanded(
+                      child: DottedLine(
+                    dashColor: Colors.white,
+                  )),
+                  Container(
+                    child: const Text(
+                      "  \$71.05",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
-                  ),
-                  Text(
-                    "  \$22.30",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
                 ],
               ),
@@ -463,13 +454,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: const <Widget>[
                   Expanded(
                     child: Text(
-                      "StarucksMobile order",
+                      "Best Buy",
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      "  \$7.30",
+                      "  \$15.30",
                       textAlign: TextAlign.right,
                       style: TextStyle(
                         fontSize: 22,
@@ -488,12 +479,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     "July 1",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
-                  SizedBox(
-                    width: 260,
-                    child: DottedLine(
-                      dashColor: Colors.white,
-                    ),
-                  ),
                   Text(
                     "  \$71.05",
                     style: TextStyle(fontSize: 18, color: Colors.white),
@@ -505,16 +490,21 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "iTunes",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 250,
-                  ),
-                  Text(
-                    "  \$9.80",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -523,16 +513,21 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "Macys.com",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 201,
-                  ),
-                  Text(
-                    "  \$50.25",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -545,12 +540,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     "July 2",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
-                  SizedBox(
-                    width: 260,
-                    child: DottedLine(
-                      dashColor: Colors.white,
-                    ),
-                  ),
                   Text(
                     "  \$22.30",
                     style: TextStyle(fontSize: 18, color: Colors.white),
@@ -558,21 +547,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "Best Buy",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 220,
-                  ),
-                  Text(
-                    "  \$15.30",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -581,16 +574,21 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "Starbucks Mobile Order",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 113,
-                  ),
-                  Text(
-                    "  \$7.00",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -603,12 +601,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     "July 2",
                     style: TextStyle(fontSize: 18, color: Colors.white),
                   ),
-                  SizedBox(
-                    width: 260,
-                    child: DottedLine(
-                      dashColor: Colors.white,
-                    ),
-                  ),
                   Text(
                     "  \$22.30",
                     style: TextStyle(fontSize: 18, color: Colors.white),
@@ -616,21 +608,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
             ),
-            SizedBox(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "Best Buy",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 220,
-                  ),
-                  Text(
-                    "  \$15.30",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -639,16 +635,21 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: const <Widget>[
-                  Text(
-                    "Starbucks Mobile Order",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "Best Buy",
+                      style: TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
-                  SizedBox(
-                    width: 113,
-                  ),
-                  Text(
-                    "  \$7.00",
-                    style: TextStyle(fontSize: 22, color: Colors.white),
+                  Expanded(
+                    child: Text(
+                      "  \$15.30",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ],
               ),
