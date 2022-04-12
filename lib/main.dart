@@ -1,11 +1,30 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:rpay_proto/NavBar.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:rpay_proto/widgets/buildPayments.dart';
+import 'package:rpay_proto/widgets/buildSheet.dart';
+import 'package:rpay_proto/widgets/topup.dart';
+import 'package:rpay_proto/widgets/buildIndicator.dart';
+import 'package:rpay_proto/screens/Payments.dart';
+import 'buildBalance.dart';
+import 'package:http/http.dart' as http;
 
-void main() {
+String uid = "anirudh@rakuten.com";
+dynamic balance;
+
+dynamic getBalance() async {
+  var url = "10.0.2.2:8080";
+  final response = await http.get(Uri.http(url, "walletengine/balance/" + uid));
+
+  if (response.statusCode == 200) {
+    balance = int.parse(response.body.toString());
+    return '';
+  }
+}
+
+void main() async {
+  await getBalance();
   runApp(const MyApp());
 }
 
@@ -14,6 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -30,6 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final controller = CarouselController();
   AppBar appbar = AppBar(
     // title: const Text('Transparent AppBar'),
     // leading: const BackButton(),
@@ -103,11 +124,19 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CarouselSlider.builder(
+                  carouselController: controller,
                   itemCount: 2,
                   itemBuilder: (context, index, realIndex) {
-                    return buildPage('data', index);
+                    if (index == 0) {
+                      return buildPage(
+                          Colors.grey.withOpacity(0.3), "Prepaid", activeIndex);
+                    } else {
+                      return buildPage(Colors.pink.withOpacity(0.3),
+                          "Pay Later", activeIndex);
+                    }
                   },
                   options: CarouselOptions(
+                      enableInfiniteScroll: false,
                       height: 150,
                       onPageChanged: ((index, reason) => {
                             setState(() => {activeIndex = index})
@@ -115,21 +144,22 @@ class _MyHomePageState extends State<MyHomePage> {
               GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
-                        isScrollControlled: true,
+                        // isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(35)),
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(35),
+                              bottom: Radius.circular(35)),
                         ),
                         context: context,
-                        builder: (context) => topUp());
+                        builder: (context) => Container(
+                            margin: const EdgeInsets.all(15.0),
+                            child: topUp()));
                   },
-                  child: buildBalance()),
+                  child: buildBalance(activeIndex)),
               Container(
                   margin: const EdgeInsets.only(top: 10, bottom: 20),
-                  child: buildIndicator()),
-              Expanded(
-                child: SingleChildScrollView(child: buildPayments()),
-              ),
+                  child: buildIndicator(activeIndex)),
+              buildPayments(activeIndex),
               // SingleChildScrollView(child: buildPayments()),
             ],
           ),
@@ -138,560 +168,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget buildBalance() {
-    if (activeIndex == 0) {
-      return Container(
-          margin: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              const Text(
-                "Prepaid Balance",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              const Text(
-                "\$ 1,203.35",
-                style: TextStyle(color: Colors.white, fontSize: 28),
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 3, bottom: 3, left: 18, right: 18),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  "TOP UP",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              )
-            ],
-          ));
-    } else {
-      return Container(
-          margin: const EdgeInsets.only(top: 20),
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Expanded(
-                    child: Text(
-                      "Shopping Power",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      " \$1000.00",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 2,
-              ),
-              Row(
-                children: const [
-                  Expanded(
-                    child: Text(
-                      "Pay monthly",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(color: Colors.white, fontSize: 18),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      " \$60.00",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Container(
-                padding: const EdgeInsets.only(
-                    top: 3, bottom: 3, left: 18, right: 18),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  "DETAIL",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
-                ),
-              )
-            ],
-          ));
-    }
-  }
+// widget
 
-  Widget buildPayments() {
-    if (activeIndex == 0) {
-      return Container(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    const Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Payment History",
-                        // ignore: prefer_const_constructors
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "July 2",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          Text(
-                            "  \$22.30",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "Best Buy",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 220,
-                          ),
-                          Text(
-                            "  \$15.30",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "Starbucks Mobile Order",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 113,
-                          ),
-                          Text(
-                            "  \$7.00",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "July 1",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          Text(
-                            "  \$71.05",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "iTunes",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 250,
-                          ),
-                          Text(
-                            "  \$9.80",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: const <Widget>[
-                          Text(
-                            "Macys.com",
-                            style: TextStyle(fontSize: 18, color: Colors.white),
-                          ),
-                          SizedBox(
-                            width: 201,
-                          ),
-                          Text(
-                            "  \$50.25",
-                            style: TextStyle(fontSize: 22, color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      );
-    } else {
-      return Container(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: <Widget>[
-            const Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Payment History",
-                // ignore: prefer_const_constructors
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.only(right: 5),
-                    child: const Text(
-                      "July 1",
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  const Expanded(
-                      child: DottedLine(
-                    dashColor: Colors.white,
-                  )),
-                  Container(
-                    child: const Text(
-                      "  \$71.05",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Text(
-                    "July 1",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                  Text(
-                    "  \$71.05",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Text(
-                    "July 2",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                  Text(
-                    "  \$22.30",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Text(
-                    "July 2",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                  Text(
-                    "  \$22.30",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: const <Widget>[
-                  Expanded(
-                    child: Text(
-                      "Best Buy",
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "  \$15.30",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-  }
-
-  Widget buildTransaction() {
-    if (activeIndex == 0) {
-      return Container(
-        child: const Center(
-            child: Text(
-          "Transaction 1",
-          style: TextStyle(color: Colors.white),
-        )),
-      );
-    } else {
-      return Container(
-        child: const Center(
-            child: Text(
-          "Transaction 2",
-          style: TextStyle(color: Colors.white),
-        )),
-      );
-    }
-  }
-
-  Widget buildIndicator() => AnimatedSmoothIndicator(
-        activeIndex: activeIndex,
-        count: 2,
-        effect: const JumpingDotEffect(
-            dotHeight: 8.0,
-            dotWidth: 8.0,
-            activeDotColor: Colors.white,
-            dotColor: Colors.grey),
-      );
-
-  Widget buildPage(String a, int index) => GestureDetector(
+  Widget buildPage(dynamic c, String cardType, int activeIndex) =>
+      GestureDetector(
         onTap: () {
+          print(cardType);
           showModalBottomSheet(
               isScrollControlled: true,
               shape: const RoundedRectangleBorder(
@@ -703,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.grey.withOpacity(0.5),
+            color: c,
           ),
           margin: const EdgeInsets.symmetric(horizontal: 24),
           child: Container(
@@ -721,11 +203,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      "Prepaid",
+                      cardType,
                       textAlign: TextAlign.right,
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   )
                 ]),
@@ -735,7 +218,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Text(
-                        "TAP TO REVEL",
+                        "TAP TO REVEAL",
                         style: TextStyle(color: Colors.white),
                       ),
                     ]),
@@ -757,263 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
       );
 }
 
-// showModalBottomSheet(
-//                         isScrollControlled: true,
-//                         shape: const RoundedRectangleBorder(
-//                           borderRadius: BorderRadius.vertical(
-//                               top: Radius.circular(35),
-//                               bottom: Radius.circular(35)),
-//                         ),
-//                         context: context,
-//                         builder: (context) => topUp());
-//                   },
 
-Widget topUp() => Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const SizedBox(
-          height: 25,
-        ),
-        Container(
-          child: const Text(
-            "Somnath your card",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        Container(
-          child: Row(
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.black,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Text(
-                "Credit/Debit  card",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.black,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Text(
-                "Bank",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.black,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Text(
-                "PayPal",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Icon(
-                Icons.favorite,
-                color: Colors.black,
-                size: 24.0,
-                semanticLabel: 'Text to announce in accessibility modes',
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              Expanded(
-                  child: Text(
-                "Cash Back",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
-              Text(
-                "\$87.35",
-                textAlign: TextAlign.right,
-                style: TextStyle(color: Colors.blue, fontSize: 20),
-              )
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        const SizedBox(
-          height: 100,
-        ),
-      ]),
-    );
-
-Widget buildSheet() => Padding(
-      padding: EdgeInsets.all(12.0),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Container(
-          child: const Text(
-            "Your card detail",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
-          child: const Text(
-            "Tap text to copy to clipboard",
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
-        const SizedBox(
-          height: 30,
-        ),
-        Container(
-          child: Row(
-            children: const [
-              Expanded(
-                  child: Text(
-                "Card number",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
-              )),
-              Expanded(
-                  child: Text(
-                "1234567890123456",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Expanded(
-                  child: Text(
-                "Expire on",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
-              )),
-              Expanded(
-                  child: Text(
-                "12/24",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Expanded(
-                  child: Text(
-                "Scurity code",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
-              )),
-              Expanded(
-                  child: Text(
-                "543",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Expanded(
-                  child: Text(
-                "Card holder",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
-              )),
-              Expanded(
-                  child: Text(
-                "Saily Anderson",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        Container(
-          child: Row(
-            children: const [
-              Expanded(
-                  child: Text(
-                "Card holder",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
-              )),
-              Expanded(
-                  child: Text(
-                "Saily Anderson",
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
-              )),
-            ],
-          ),
-        ),
-        const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
-        const SizedBox(
-          height: 30,
-        ),
-        Container(
-          margin: const EdgeInsets.only(bottom: 10),
-          child: const Text(
-            "Renew number",
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.blue, fontSize: 18),
-          ),
-        ),
-      ]),
-    );
 
 // Scaffold(
 //         drawer: const Navbar(),
