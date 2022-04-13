@@ -12,12 +12,15 @@ var current_date;
 
 class Transactions extends StatefulWidget {
   // ignore: use_key_in_widget_constructors
-
+  var myHomePageState;
+  Transactions(this.myHomePageState);
   @override
-  State<Transactions> createState() => _TransactionsState();
+  State<Transactions> createState() => _TransactionsState(myHomePageState);
 }
 
 class _TransactionsState extends State<Transactions> {
+  var myHomePageState;
+  _TransactionsState(this.myHomePageState);
   int currentPage = 1;
   late int totalpages;
   List<Transaction> transactions = [];
@@ -29,13 +32,15 @@ class _TransactionsState extends State<Transactions> {
     if (isRefresh) {
       currentPage = 1;
     } else {
-      if (currentPage >= totalpages) {
+      if (currentPage >= totalpages+1) {
+        print(currentPage);
+        print(totalpages);
         refreshController.loadNoData();
         return true;
       }
     }
     final Uri uri = Uri.parse(
-        "http://10.0.2.2:8080/walletengine/get/transactions/anirudh@rakuten.com/$currentPage");
+        "http://10.0.2.2:8080/walletengine/get/transactions/$uid/$currentPage");
 
     final response = await http.get(uri);
 
@@ -82,17 +87,37 @@ class _TransactionsState extends State<Transactions> {
   }
 
   @override
+  void initState() {
+    refresh = true;
+    // TODO: implement initState
+    super.initState();
+    print("init");
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SmartRefresher(
       enablePullUp: true,
       controller: refreshController,
       onRefresh: () async {
-        transactionWithDate = [];
-        final result = await getTransactionData(isRefresh: true);
-        if (result) {
-          refreshController.refreshCompleted();
+        if (refresh) {
+          refresh = false;
+          transactionWithDate = [];
+          final result = await getTransactionData(isRefresh: true);
+          if (result) {
+            refreshController.refreshCompleted();
+          } else {
+            refreshController.refreshFailed();
+          }
         } else {
-          refreshController.refreshFailed();
+          myHomePageState.updateBalance();
+          transactionWithDate = [];
+          final result = await getTransactionData(isRefresh: true);
+          if (result) {
+            refreshController.refreshCompleted();
+          } else {
+            refreshController.refreshFailed();
+          }
         }
       },
       onLoading: () async {

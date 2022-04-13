@@ -11,6 +11,7 @@ import 'widgets/appBar.dart';
 import 'widgets/buildBalance.dart';
 import 'package:http/http.dart' as http;
 
+bool refresh = true;
 dynamic uid = "";
 dynamic uname = "";
 int balance = 0;
@@ -56,8 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
   double topMargin = 0;
   int activeIndex = 0;
 
-  void _updateBalance() {
-    print("set state is on");
+  updateBalance() async {
+    await getBalance();
     setState(() {});
   }
 
@@ -122,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
               buildIndicator(activeIndex),
 
               // build Payments
-              buildPayments(activeIndex),
+              buildPayments(activeIndex, this),
             ],
           ),
         )

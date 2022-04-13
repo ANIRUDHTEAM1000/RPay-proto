@@ -3,7 +3,7 @@ import 'package:dotted_line/dotted_line.dart';
 
 import '../screens/Payments.dart';
 
-Widget buildPayments(activeIndex) {
+Widget buildPayments(activeIndex,myHomePageState) {
   if (activeIndex == 0) {
     return Expanded(
         child: Container(
@@ -21,7 +21,7 @@ Widget buildPayments(activeIndex) {
                         fontWeight: FontWeight.bold,
                       )),
                 ),
-                Expanded(child: Container(child: Transactions())),
+                Expanded(child: Container(child: Transactions(myHomePageState))),
               ],
             )));
   } else {

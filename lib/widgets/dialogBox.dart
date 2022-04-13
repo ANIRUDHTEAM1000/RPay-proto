@@ -4,6 +4,11 @@ import 'package:intl/intl.dart';
 
 showDialogFunc(context, transaction) {
   String tdate = DateFormat('MMMM  dd  yyyy').format(transaction.date);
+  final _utcTime = DateTime.utc(0, 0, 0, transaction.date.hour,
+      transaction.date.minute, transaction.date.second);
+  final _localTime = _utcTime.toLocal();
+  String tTime = DateFormat('hh:mm aaa').format(_localTime);
+
   String amt;
   String debitOrCredit;
   if (transaction.amount < 0) {
@@ -42,7 +47,15 @@ showDialogFunc(context, transaction) {
                       const Expanded(
                           child: DottedLine(
                         dashColor: Colors.blue,
-                      ))
+                      )),
+                      const SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        tTime,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      ),
                     ],
                   ),
                   const SizedBox(
