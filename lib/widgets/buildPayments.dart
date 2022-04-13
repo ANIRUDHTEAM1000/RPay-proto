@@ -21,7 +21,7 @@ Widget buildPayments(activeIndex) {
                         fontWeight: FontWeight.bold,
                       )),
                 ),
-                Expanded(child: Container(child: const Transactions())),
+                Expanded(child: Container(child: Transactions())),
               ],
             )));
   } else {
@@ -60,7 +60,7 @@ Widget buildPayments(activeIndex) {
                     )),
                     Container(
                       child: const Text(
-                        "  \$780.00",
+                        "  \$0.00",
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),
@@ -133,7 +133,7 @@ Widget buildPayments(activeIndex) {
                     )),
                     Container(
                       child: const Text(
-                        "  \$423.20",
+                        "  \$0.00",
                         textAlign: TextAlign.right,
                         style: TextStyle(fontSize: 18, color: Colors.white),
                       ),

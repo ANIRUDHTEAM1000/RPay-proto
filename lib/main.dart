@@ -1,17 +1,19 @@
 // ignore_for_file: file_names, avoid_unnecessary_containers
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:rpay_proto/NavBar.dart';
+import 'package:rpay_proto/widgets/NavBar.dart';
+import 'package:rpay_proto/screens/loginScreen.dart';
 import 'package:rpay_proto/widgets/buildPayments.dart';
-import 'package:rpay_proto/widgets/buildSheet.dart';
+import 'package:rpay_proto/widgets/bottomSheet.dart';
 import 'package:rpay_proto/widgets/topup.dart';
 import 'package:rpay_proto/widgets/buildIndicator.dart';
-import 'package:rpay_proto/screens/Payments.dart';
-import 'buildBalance.dart';
+import 'widgets/appBar.dart';
+import 'widgets/buildBalance.dart';
 import 'package:http/http.dart' as http;
 
-String uid = "anirudh@rakuten.com";
-dynamic balance;
+dynamic uid = "";
+dynamic uname = "";
+int balance = 0;
 
 dynamic getBalance() async {
   var url = "10.0.2.2:8080";
@@ -24,7 +26,6 @@ dynamic getBalance() async {
 }
 
 void main() async {
-  await getBalance();
   runApp(const MyApp());
 }
 
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(),
+      home: LoginScreen(),
     );
   }
 }
@@ -50,58 +51,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool refresh = true;
   final controller = CarouselController();
-  AppBar appbar = AppBar(
-    // title: const Text('Transparent AppBar'),
-    // leading: const BackButton(),
-    actions: [
-      Container(
-        margin: const EdgeInsets.all(5.0),
-        child: Column(children: const [
-          Text(
-            "Cash Back",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          Text(" 87.35 ",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold))
-        ]),
-      ),
-      const VerticalDivider(color: Colors.white),
-      GestureDetector(
-        onTap: (() => print("Hi")),
-        child: Container(
-          margin: const EdgeInsets.all(5.0),
-          child: Column(children: const [
-            Text(
-              "Rakuten Points",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
-            Text("147 Points",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold))
-          ]),
-        ),
-      ),
-    ],
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
-    ),
-    backgroundColor: Colors.transparent, // Colors.white.withOpacity(0.1),
-    elevation: 0,
-  );
   double topMargin = 0;
   int activeIndex = 0;
+
+  void _updateBalance() {
+    print("set state is on");
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     topMargin = appbar.preferredSize.height;
@@ -123,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              // 1 carsel builder
               CarouselSlider.builder(
                   carouselController: controller,
                   itemCount: 2,
@@ -155,12 +115,14 @@ class _MyHomePageState extends State<MyHomePage> {
                             margin: const EdgeInsets.all(15.0),
                             child: topUp()));
                   },
-                  child: buildBalance(activeIndex)),
-              Container(
-                  margin: const EdgeInsets.only(top: 10, bottom: 20),
-                  child: buildIndicator(activeIndex)),
+                  // Balance
+                  child: Balance(activeIndex)),
+
+              // build Indicator
+              buildIndicator(activeIndex),
+
+              // build Payments
               buildPayments(activeIndex),
-              // SingleChildScrollView(child: buildPayments()),
             ],
           ),
         )
@@ -168,12 +130,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-// widget
+// widget carosel
 
   Widget buildPage(dynamic c, String cardType, int activeIndex) =>
       GestureDetector(
         onTap: () {
-          print(cardType);
           showModalBottomSheet(
               isScrollControlled: true,
               shape: const RoundedRectangleBorder(
@@ -239,28 +200,3 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
 }
-
-
-
-// Scaffold(
-//         drawer: const Navbar(),
-//         extendBodyBehindAppBar: true,
-//         appBar: AppBar(
-//           backgroundColor: Colors.transparent, // Colors.white.withOpacity(0.1),
-//           elevation: 0,
-//           title: const Text(
-//             "Hello Transperent AppBar with Body",
-//             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-//           ),
-//         ),
-//         body: Stack(
-//           children: [
-//             Container(
-//               decoration: const BoxDecoration(
-//                   image: DecorationImage(
-//                       image: AssetImage("assets/images/bluesky.jpg"),
-//                       fit: BoxFit.cover)),
-//             ),
-//             const Center(child: Text("hi"))
-//           ],
-//         ));
