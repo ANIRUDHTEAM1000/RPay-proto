@@ -32,7 +32,7 @@ class _TransactionsState extends State<Transactions> {
     if (isRefresh) {
       currentPage = 1;
     } else {
-      if (currentPage >= totalpages+1) {
+      if (currentPage >= totalpages + 1) {
         print(currentPage);
         print(totalpages);
         refreshController.loadNoData();
@@ -175,6 +175,14 @@ class _TransactionsState extends State<Transactions> {
                       top: 8.0, bottom: 8.0, left: 20.0, right: 20.0),
                   child: Row(
                     children: <Widget>[
+                      CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 25,
+                        child: Text(
+                          fun1(transaction.name),
+                          style: TextStyle(fontSize: 25, color: Colors.white),
+                        ), //Text
+                      ),
                       Expanded(
                         child: Text(
                           transaction.name,
@@ -201,4 +209,9 @@ class _TransactionsState extends State<Transactions> {
           itemCount: transactionWithDate.length),
     );
   }
+}
+
+fun1(String s) {
+  var a = s.split(' ');
+  return a[0][0] + a[1][0];
 }

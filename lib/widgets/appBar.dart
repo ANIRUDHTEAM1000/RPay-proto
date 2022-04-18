@@ -1,43 +1,59 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 AppBar appbar = AppBar(
   // title: const Text('Transparent AppBar'),
   // leading: const BackButton(),
   actions: [
-    Container(
-      margin: const EdgeInsets.all(5.0),
-      child: Column(children: const [
-        Text(
-          "Cash Back",
+    Column(children: [
+      Text("Cash Back",
           textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        Text(" 0 ",
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold))
-      ]),
+          style: GoogleFonts.roboto(
+            textStyle: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.bold),
+          )),
+      Text("\$ 0 ",
+          style: GoogleFonts.roboto(
+              textStyle: TextStyle(
+                  fontSize: 18.sp,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)))
+    ]),
+    VerticalDivider(
+      color: Colors.white,
+      endIndent: 20.0.h,
+      thickness: 1.sp,
     ),
-    const VerticalDivider(color: Colors.white),
     GestureDetector(
       onTap: (() => print("Hi")),
-      child: Container(
-        margin: const EdgeInsets.all(5.0),
-        child: Column(children: const [
-          Text(
-            "Rakuten Points",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          Text("0 Points",
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold))
-        ]),
-      ),
+      child: Column(children: [
+        SizedBox(
+          child: Text("Rakuten Points",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.roboto(
+                textStyle: TextStyle(
+                    fontSize: 12.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              )),
+        ),
+        SizedBox(
+          child: Text("0 Points",
+              style: GoogleFonts.roboto(
+                textStyle: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              )),
+        ),
+      ]),
     ),
+    SizedBox(
+      width: 8.0.w,
+    )
   ],
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),

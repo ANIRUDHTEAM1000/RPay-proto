@@ -9,6 +9,7 @@ import 'package:rpay_proto/widgets/topup.dart';
 import 'package:rpay_proto/widgets/buildIndicator.dart';
 import 'widgets/appBar.dart';
 import 'widgets/buildBalance.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:http/http.dart' as http;
 
 bool refresh = true;
@@ -34,13 +35,13 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ScreenUtilInit(
+      builder: (BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        home: LoginScreen(),
       ),
-      home: LoginScreen(),
+      designSize: const Size(375, 812),
     );
   }
 }
@@ -73,13 +74,13 @@ class _MyHomePageState extends State<MyHomePage> {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("assets/images/bluesky.jpg"),
+              image: AssetImage("assets/images/image.jpeg"),
               fit: BoxFit.cover,
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: topMargin * 1.7),
+          margin: EdgeInsets.only(top: topMargin * 1.5),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -98,7 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   options: CarouselOptions(
                       enableInfiniteScroll: false,
-                      height: 150,
+                      height: 168.57.h,
                       onPageChanged: ((index, reason) => {
                             setState(() => {activeIndex = index})
                           }))),
@@ -145,13 +146,13 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (context) => buildSheet());
         },
         child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 10.w),
+          width: 295.w,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(11.r),
             color: c,
           ),
-          margin: const EdgeInsets.symmetric(horizontal: 24),
           child: Container(
-            padding: const EdgeInsets.all(10.0),
             child: Column(children: [
               Expanded(
                 child: Row(children: [
@@ -160,8 +161,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Center(
                       child: Image.asset(
                         "assets/images/whitebgRakuten-removebg-preview.ico",
-                        height: 40,
-                        width: 70,
+                        height: 22.95.h,
+                        width: 70.w,
                       ),
                     ),
                   ),
