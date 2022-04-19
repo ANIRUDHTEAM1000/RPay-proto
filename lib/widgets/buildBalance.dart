@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:http/http.dart' as http;
 import '../main.dart';
@@ -22,16 +23,16 @@ class _BalanceState extends State<Balance> {
           margin: const EdgeInsets.only(top: 20),
           child: Column(
             children: [
-              const Text(
+              Text(
                 "Prepaid Balance",
-                style: TextStyle(color: Colors.white, fontSize: 20),
+                style: GoogleFonts.roboto(color: Colors.white, fontSize: 18),
               ),
               const SizedBox(
                 height: 2,
               ),
               Text(
                 "\$ $balance",
-                style: TextStyle(color: Colors.white, fontSize: 28),
+                style: GoogleFonts.roboto(color: Colors.white, fontSize: 24),
               ),
               const SizedBox(
                 height: 5,
@@ -46,9 +47,9 @@ class _BalanceState extends State<Balance> {
                   ),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
+                child: Text(
                   "TOP UP",
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: GoogleFonts.roboto(color: Colors.white, fontSize: 11),
                 ),
               )
             ],
@@ -59,22 +60,20 @@ class _BalanceState extends State<Balance> {
           child: Column(
             children: [
               Row(
-                children: const [
+                children:  [
                   Expanded(
                     child: Text(
                       "Shopping Power",
                       textAlign: TextAlign.right,
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                style: GoogleFonts.roboto(color: Colors.white, fontSize: 18),
                     ),
                   ),
                   Expanded(
                     child: Text(
                       " \$1000.00",
                       textAlign: TextAlign.left,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28,
-                      ),
+                   style: GoogleFonts.roboto(color: Colors.white, fontSize: 24),
+
                     ),
                   ),
                 ],

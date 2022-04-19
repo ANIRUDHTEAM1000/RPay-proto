@@ -10,14 +10,14 @@ Widget buildSheet() => Padding(
           child: const Text(
             "Your card detail",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
         Container(
           child: const Text(
             "Tap text to copy to clipboard",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(fontSize: 14),
           ),
         ),
         const SizedBox(
@@ -30,13 +30,13 @@ Widget buildSheet() => Padding(
                   child: Text(
                 "Card number",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 18),
               )),
               Expanded(
                   child: Text(
                 "1234567890123456",
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               )),
             ],
           ),
@@ -49,13 +49,13 @@ Widget buildSheet() => Padding(
                   child: Text(
                 "Expire on",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 18),
               )),
               Expanded(
                   child: Text(
                 "12/24",
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               )),
             ],
           ),
@@ -68,13 +68,13 @@ Widget buildSheet() => Padding(
                   child: Text(
                 "Scurity code",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 18),
               )),
               Expanded(
                   child: Text(
                 "543",
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               )),
             ],
           ),
@@ -87,13 +87,13 @@ Widget buildSheet() => Padding(
                   child: Text(
                 "Card holder",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 18),
               )),
               Expanded(
                   child: Text(
                 "Saily Anderson",
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               )),
             ],
           ),
@@ -104,15 +104,15 @@ Widget buildSheet() => Padding(
             children: const [
               Expanded(
                   child: Text(
-                "Card holder",
+                "Enabled",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontSize: 18),
               )),
               Expanded(
                   child: Text(
                 "Saily Anderson",
                 textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 20, color: Colors.blue),
+                style: TextStyle(fontSize: 18, color: Colors.blue),
               )),
             ],
           ),

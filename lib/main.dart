@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         context: context,
                         builder: (context) => Container(
                             margin: const EdgeInsets.all(15.0),
-                            child: topUp()));
+                            child: topUp(context)));
                   },
                   // Balance
                   child: Balance(activeIndex)),

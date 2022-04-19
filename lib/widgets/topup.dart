@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:rpay_proto/widgets/TopupScreen.dart';
 
-Widget topUp() => Padding(
+Widget topUp(context) => Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         const SizedBox(
@@ -32,7 +33,7 @@ Widget topUp() => Padding(
                   child: Text(
                 "Credit/Debit  card",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 18, color: Colors.black),
               )),
             ],
           ),
@@ -40,22 +41,32 @@ Widget topUp() => Padding(
         const Divider(color: Colors.grey, thickness: 0.3, endIndent: 0),
         Container(
           child: Row(
-            children: const [
-              Icon(
+            children: [
+              const Icon(
                 Icons.favorite,
                 color: Colors.black,
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-              SizedBox(
+              const SizedBox(
                 width: 25,
               ),
-              Expanded(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TopupScreen()),
+                  );
+                },
+                child: const Expanded(
                   child: Text(
-                "Bank",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              )),
+                    "Bank",
+                    textAlign: TextAlign.left,
+                    style: TextStyle(fontSize: 18, color: Colors.black),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -76,7 +87,7 @@ Widget topUp() => Padding(
                   child: Text(
                 "PayPal",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 18, color: Colors.black),
               )),
             ],
           ),
@@ -98,12 +109,12 @@ Widget topUp() => Padding(
                   child: Text(
                 "Cash Back",
                 textAlign: TextAlign.left,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: TextStyle(fontSize: 18, color: Colors.black),
               )),
               Text(
                 "\$87.35",
                 textAlign: TextAlign.right,
-                style: TextStyle(color: Colors.blue, fontSize: 20),
+                style: TextStyle(color: Colors.blue, fontSize: 18),
               )
             ],
           ),
