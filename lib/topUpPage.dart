@@ -19,6 +19,12 @@ class _TopupScreenState extends State<TopupScreen> {
     return Scaffold(
       drawer: const Navbar(),
       //     appBar: appbar,
+      appBar: AppBar(
+        leading: Icon(Icons.arrow_back_ios_new),
+        title: Text("Top Up"),
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Container(
@@ -38,27 +44,34 @@ class _TopupScreenState extends State<TopupScreen> {
                   children: [
                     Text(
                       "Current balance \$${balance}",
-                      style: TextStyle(fontSize: 18,color: Colors.white),
+                      style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                     Container(
                       alignment: Alignment.center,
-                      child: TextField(
+                      child: TextFormField(
                         style: GoogleFonts.roboto(
                             color: Colors.white, fontSize: 24),
                         decoration: const InputDecoration(
-                            labelText: "Amount",
-                            labelStyle: TextStyle(color: Colors.white),
-                            hintText: "Enter Amount",
-                            hintStyle: TextStyle(color: Colors.white),
+                            label: Center(
+                              child: Text("Amount"),
+                            ),
+                            //        labelText: "Amount",
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                            ),
+
+                            //         hintText: "Enter Amount",
+                            //        hintStyle: TextStyle(color: Colors.white),
                             enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
                             ),
                             fillColor: Colors.transparent,
                             filled: true),
+                        textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
@@ -73,12 +86,12 @@ class _TopupScreenState extends State<TopupScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text("\$10",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         Container(
@@ -91,12 +104,12 @@ class _TopupScreenState extends State<TopupScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text("\$50",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         Container(
@@ -109,12 +122,12 @@ class _TopupScreenState extends State<TopupScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text("\$100",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white))),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 12,
                         ),
                         Container(
@@ -127,7 +140,7 @@ class _TopupScreenState extends State<TopupScreen> {
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Center(
+                          child: const Center(
                               child: Text("\$500",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white))),

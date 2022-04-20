@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:test/topUpPage.dart';
 import '../main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Widget buildBalance(int activeIndex) {
+Widget buildBalance(int activeIndex,BuildContext context) {
   print(activeIndex);
   if (activeIndex == 0) {
     return Container(
@@ -138,13 +139,22 @@ Widget buildBalance(int activeIndex) {
                 ),
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                "DETAIL",
-                style: GoogleFonts.roboto(
-                  textStyle: TextStyle(
-                      fontSize: 11.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const TopupScreen()),
+                  );
+                },
+                child: Text(
+                  "DETAIL",
+                  style: GoogleFonts.roboto(
+                    textStyle: TextStyle(
+                        fontSize: 11.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700),
+                  ),
                 ),
               ),
             )

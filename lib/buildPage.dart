@@ -18,7 +18,7 @@ Widget buildPage(
     Container(
       margin: EdgeInsets.symmetric(horizontal: 15.w),
       child: Column(children: [
-        // cards 
+        // cards
         GestureDetector(
             onTap: () {
               showModalBottomSheet(
@@ -31,7 +31,7 @@ Widget buildPage(
                   builder: (context) => bottomSheet(context));
             },
             child: buildCard(cardType, c, context)),
-        //balance 
+        //balance
         GestureDetector(
             onTap: () {
               showModalBottomSheet(
@@ -47,6 +47,6 @@ Widget buildPage(
                           vertical: 15.0.h, horizontal: 15.w),
                       child: topUp(context)));
             },
-            child: buildBalance(activeIndex)),
+            child: buildBalance(activeIndex, context)),
       ]),
     );
